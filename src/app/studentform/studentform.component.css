@@ -1,0 +1,214 @@
+/* Center the form container */
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+.form-container {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: 50%;
+  max-width: 600px;
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-class p {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+textarea {
+  height: 80px;
+  resize: none;
+}
+
+button {
+  background-color: brown;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 20%;
+  display: block;
+  margin-top: 10px;
+}
+
+.submit-button{
+  background-color: brown;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 30%;
+  display: block;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: darksalmon;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+}
+
+.gender-container input {
+  margin-right: 5px;
+}
+
+.qualification-item,
+.document-item {
+  background: #f9f9f9;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.document-preview img {
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.preview-container {
+  background: #f1ebeb;
+  padding: 20px;
+  border-radius: 10px;
+  margin-left: 64px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+/* Small Preview Image */
+.preview-image {
+  width: 200px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.preview-image:hover {
+  transform: scale(1.1);
+}
+
+/* Fullscreen Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Image inside Modal */
+.modal-content {
+  position: relative;
+}
+
+.zoomable-image {
+  width: 80%;
+  height: auto;
+  cursor: zoom-in;
+  transition: transform 0.3s;
+}
+
+.zoomable-image:hover {
+  transform: scale(1.5); /* Zoom Effect */
+}
+
+/* Fullscreen Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Image inside Modal */
+.modal-content {
+  position: relative;
+}
+
+.zoomable-image {
+  width: 80%;
+  height: auto;
+  cursor: zoom-in;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Control Buttons */
+.image-controls {
+  position: absolute;
+  top: 30px;
+  left: 67vw;
+  margin-top: -111px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.image-controls button {
+  background:white;
+  color: black;
+  font-weight: bold;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.image-controls button:hover {
+  color: black;
+}

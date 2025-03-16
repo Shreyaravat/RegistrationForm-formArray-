@@ -1,0 +1,135 @@
+<!-- Gender Filter Dropdown -->
+<!-- <div style="margin-bottom: 10px;">
+    <label for="genderFilter">Filter by Gender:</label>
+    <select id="genderFilter" [(ngModel)]="selectedGender" (change)="filterByGender()">
+        <option value="">All</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+    </select> -->
+
+    <!-- Download Button -->
+    <!-- <button pButton type="button" 
+    label="Download Excel" 
+    icon="pi pi-download" 
+    class="p-button-success" 
+    [disabled]="!selectedGender" 
+    (click)="downloadExcel()">
+    </button>
+</div> -->
+
+<!-- <label for="genderFilter">Filter by Gender:</label>
+<select id="genderFilter" [(ngModel)]="selectedGender" (change)="filterByGender()">
+    <option value="">All</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+</select> -->
+
+<div class="filters-container">
+    <p-dropdown 
+      [(ngModel)]="selectedGender" 
+      [options]="genderOptions"
+      placeholder="Select Gender"
+      (onChange)="filterByGender()">
+    </p-dropdown>
+  
+    <p-dropdown 
+      [(ngModel)]="selectedQualification" 
+      [options]="qualificationOptions"
+      placeholder="Select Qualification"
+      (onChange)="filterByQualification()">
+    </p-dropdown>
+  
+    <p-button 
+      label="Download Excel" 
+      icon="pi pi-download" 
+      (click)="downloadExcel()" 
+      class="p-button-success">
+    </p-button>
+  </div>
+  
+<!-- 
+<p-dropdown 
+  [(ngModel)]="selectedGender" 
+  [options]="genderOptions"
+  placeholder="Select Gender"
+  (onChange)="filterByGender()">
+</p-dropdown>
+
+<p-button 
+  label="Download Excel" 
+  icon="pi pi-download" 
+  (click)="downloadExcel()" 
+  class="p-button-success">
+</p-button>
+
+
+<p-dropdown 
+  [(ngModel)]="selectedQualification" 
+  [options]="qualificationOptions" 
+  placeholder="Select Qualification"
+  (onChange)="filterByQualification()">
+</p-dropdown> -->
+
+<p-table  
+  [value]="filteredStudents" 
+  [rows]="rowPerPage" 
+  [totalRecords]="totalRecords"
+  [scrollable]="true">
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="firstname">First Name <p-sortIcon field="firstname"></p-sortIcon></th>
+            <th pSortableColumn="lastname">Last Name <p-sortIcon field="lastname"></p-sortIcon></th>
+            <th pSortableColumn="gender">Gender <p-sortIcon field="gender"></p-sortIcon></th>
+            <th pSortableColumn="permanentAddress">Permanent Address <p-sortIcon field="permanentAddress"></p-sortIcon></th>
+            <th>Qualifications</th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-student>
+        <tr>
+            <td>{{ student.firstname }}</td>
+            <td>{{ student.lastname }}</td>
+            <td>{{ student.gender }}</td>
+            <td>{{ student.permanentAddress }}</td>
+
+            <td>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <!-- Header Row -->
+                    <tr style="font-weight: bold; background-color: #f2f2f2;">
+                        <td style="padding: 5px;">Qualification</td>
+                        <td style="padding: 5px;">School/Institute Name</td>
+                        <td style="padding: 5px;">Percentage</td>
+                        <td style="padding: 5px;">Passing Year</td>
+                    </tr>
+                    <!-- Data Rows -->
+                    <tr *ngFor="let qual of student.qualifications">
+                        <td style="font-weight: bold; padding-right: 10px;">{{ qual.qualificationLevel }}</td>
+                        <td>{{ qual.instituteName }}</td>
+                        <td>{{ qual.percentage }}%</td>
+                        <td>({{ qual.passingYear }})</td>
+                    </tr>
+                </table>
+            </td>     
+
+            <td>
+                <button pButton type="button" label="Edit" icon="pi pi-pencil" (click)="editStudent(student)"></button> &nbsp;
+                <button pButton type="button" label="Delete" icon="pi pi-trash" 
+                class="p-button-danger" (click)="deleteStudent(student.id)">
+            </button>
+            
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+
+
+
+                <!-- <button pButton type="button" label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteStudent(student.id)"></button> -->
+
+
+
+<!-- [lazy]="true" -->
+<!-- [virtualScroll]="true"     -->
+<!-- (onLazyLoad)="loadMoreData($event)"> -->

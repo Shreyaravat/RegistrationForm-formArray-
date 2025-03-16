@@ -1,0 +1,117 @@
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+h2, h3 {
+    text-align: center;
+    color: #333;
+}
+
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+    color: #555;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+small {
+    color: red;
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+}
+
+button {
+    background: brown;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 20%;
+}
+
+.update-buttton {
+    background: gren;
+    color: white;
+    padding: 10px;
+    border: none;
+    margin-left: 35%;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 30%;
+}
+
+button:hover {
+    background: darksalmon;
+}
+
+button[type="button"] {
+    background: brown;
+}
+
+button[type="button"]:hover {
+    background: darksalmon;
+}
+
+button[disabled] {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+img {
+    display: block;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+div[formArrayName="qualifications"], 
+div[formArrayName="documents"] {
+    margin-top: 15px;
+    padding: 10px;
+    background: #eef2f7;
+    border-radius: 5px;
+}
+
+div[formGroupName] {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+div[formGroupName]:last-child {
+    border-bottom: none;
+}
+
+.gender-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adjust spacing between label and options */
+  }
+  
+  .gender-options {
+    display: flex;
+    gap: 10px; /* Adjust spacing between Male and Female options */
+  }
+  

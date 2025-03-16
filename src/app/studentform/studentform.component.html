@@ -1,0 +1,204 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+ 
+
+
+<div class="center-container">
+  <div class="form-container">
+  
+    <h1 class="form-title">Student Registration</h1>
+  
+    <form [formGroup]="qualificationsForm" (ngSubmit)="onSubmit()" class="form-class">
+      
+      <div class="name-container">
+        <p>
+          <label for="firstname">First Name : </label>
+          <input type="text" id="firstname" formControlName="firstname">
+          <span *ngIf="firstname?.touched && firstname?.invalid" class="error-message">
+            <span *ngIf="firstname?.errors?.['required']">First Name is required.</span>
+            <span *ngIf="firstname?.errors?.['minlength']">Minimum 3 characters required.</span>
+            <span *ngIf="qualificationsForm.get('firstname')?.hasError('whitespace')">First Name cannot be empty or just spaces.</span>
+
+          </span>
+        </p>
+      
+        <p>
+          <label for="lastname">Last Name : </label>
+          <input type="text" id="lastname" formControlName="lastname">
+          <span *ngIf="lastname?.touched && lastname?.invalid" class="error-message">
+            <span *ngIf="lastname?.errors?.['required']">Last Name is required.</span>
+            <span *ngIf="lastname?.errors?.['minlength']">Minimum 3 characters required.</span>
+            <span *ngIf="qualificationsForm.get('lastname')?.hasError('whitespace')">Last Name cannot be empty or just spaces.</span>
+
+          </span>
+        </p>
+      </div>
+
+      <div class="gender-container">
+        <p>
+          <label>Gender:</label>
+          <input type="radio" formControlName="gender" value="Male"> Male
+          <input type="radio" formControlName="gender" value="Female"> Female
+          <span *ngIf="gender?.touched && gender?.invalid" class="error-message">Gender is required.</span>
+        </p>
+      </div>
+
+      <div class="address-container">
+        <p>
+          <label for="permanentAddress">Permanent Address:</label>
+          <textarea id="permanentAddress" formControlName="permanentAddress"></textarea>
+          <span *ngIf="permanentAddress?.touched && permanentAddress?.invalid" class="error-message">Permanent Address is required.</span>
+          <span *ngIf="permanentAddress?.errors?.['whitespace']">Address cannot be empty or just spaces.</span>
+
+        </p>
+      </div>
+
+      <div class="qualifications-container" formArrayName="qualifications">
+        <div *ngFor="let qualification of qualifications.controls; let i = index" [formGroupName]="i" class="qualification-item">
+          <strong>{{ getQualificationLabel(i) }}</strong>
+    
+          <p>
+            <label>
+              {{ i < 2 ? 'School Name' : 'University Name' }}:
+            </label>
+            <input type="text" formControlName="instituteName" />
+            <span *ngIf="qualification.get('instituteName')?.touched && qualification.get('instituteName')?.invalid" class="error-message">
+              Institute Name is required.
+            </span>
+            <!-- <span *ngIf="qualificationsForm.get('instituteName')?.hasError('whitespace')">This field cannot be empty or just spaces.</span> -->
+
+          </p>
+    
+          <p>
+            <label>Percentage:</label>
+            <input type="text" formControlName="percentage" />
+            <span *ngIf="qualification.get('percentage')?.touched && qualification.get('percentage')?.invalid" class="error-message">
+              <span *ngIf="qualification.get('percentage')?.errors?.['required']">Percentage is required.</span>
+              <span *ngIf="qualification.get('percentage')?.errors?.['pattern']">Invalid percentage format.</span>
+            </span>
+          </p>
+    
+          <p>
+            <label>Passing Year:</label>
+            <input type="text" formControlName="passingYear" />
+            <span *ngIf="qualification.get('passingYear')?.touched && qualification.get('passingYear')?.invalid" class="error-message">
+              <span *ngIf="qualification.get('passingYear')?.errors?.['required']">Passing Year is required.</span>
+              <span *ngIf="qualification.get('passingYear')?.errors?.['pattern']">Invalid year format (YYYY).</span>
+            </span>
+          </p>
+    
+          <p *ngIf="i > 0">
+            <button type="button" (click)="removeQualification(i)">Remove</button>
+          </p>
+        </div>
+      </div>
+      
+      <button type="button" (click)="addQualification()" [disabled]="qualifications.length >= 5">
+        Add Qualification
+      </button> <br> <br>
+
+      <div class="documents-container" *ngIf="documentsArray.controls.length > 0" formArrayName="documents">
+        <div *ngFor="let document of documentsArray.controls; let i = index" [formGroupName]="i" class="document-item">
+          <p>
+            <label>{{ document.get('documentLabel')?.value }}</label>
+            <input type="file" (change)="onFileSelected($event, i)" accept=".jpg, .png, .pdf">
+          </p>
+          
+          <div *ngIf="document.get('previewUrl')?.value" class="document-preview">
+            <img [src]="document.get('previewUrl')?.value" width="50" height="50" (click)="openFullScreen(document.get('previewUrl')?.value)" class="clickable-image">                        
+          </div>
+      
+          <p *ngIf="i > 0">
+            <button type="button" (click)="removeDocument(i)">Remove</button>
+          </p>
+        </div>
+      </div>  
+
+      <button type="button" (click)="addDocument()" [disabled]="documentsArray.length >= qualifications.length">
+          Add Document
+      </button>
+
+      <br/> <br/>
+    
+      <button type="submit">Submit</button>
+    </form>
+  
+  </div>
+  
+  <div class="preview-container" *ngIf="submittedData">
+    <div *ngIf="submittedData">
+    <h2>Preview of Submitted Data</h2>
+    <hr>
+    <p><strong>First Name:</strong> {{ submittedData.firstname }}</p>
+    <p><strong>Last Name:</strong> {{ submittedData.lastname }}</p>
+    <p><strong>Gender:</strong> {{ submittedData.gender }}</p>
+    <p><strong>Permanent Address: </strong> {{ submittedData.permanentAddress }}</p>
+
+    <h3>Qualifications:</h3>
+    <div *ngFor="let qualification of submittedData.qualifications; let i = index" class="qualification-preview">
+      <p>
+        <strong>{{ getQualificationLabel(i) }}</strong><br>
+        <strong>Institute Name:</strong> {{ qualification.instituteName }}<br>
+        <strong>Percentage:</strong> {{ qualification.percentage }}%<br>
+        <strong>Passing Year:</strong> {{ qualification.passingYear }}
+      </p>
+    </div>
+
+    <h3>Documents:</h3>
+    <div *ngFor="let doc of submittedData.documents" class="document-preview-item">
+      <p><strong>{{ doc.documentLabel }}</strong></p>
+      
+      <!-- <ng-container *ngIf="isImage(doc.previewUrl)">
+        <img [src]="doc.previewUrl" alt="Preview"
+             class="preview-image"
+             (click)="openFullScreen(doc.previewUrl)" />
+      </ng-container> -->
+      
+      <!-- Fullscreen Modal -->
+      <!-- <div class="modal" *ngIf="showModal" (click)="closeModal()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+          <img [src]="imageUrl" class="zoomable-image" />
+        </div>
+      </div>
+       -->
+
+
+       <ng-container *ngIf="isImage(doc.previewUrl)">
+        <img [src]="doc.previewUrl" alt="Preview"
+             class="preview-image"
+             (click)="openFullScreen(doc.previewUrl)" />
+      </ng-container>
+      
+      <!-- Fullscreen Modal -->
+      <div class="modal" *ngIf="showModal" (click)="closeModal()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+          <img [src]="imageUrl" 
+               class="zoomable-image"
+               [style.transform]="'scale(' + zoomLevel + ') rotate(' + rotationAngle + 'deg)'" />
+          
+          <!-- Action Buttons -->
+          <div class="image-controls">
+            <button (click)="zoomIn()" title="Zoom In">
+              <i class="fas fa-search-plus"></i>
+            </button>
+            <button (click)="zoomOut()" title="Zoom Out">
+              <i class="fas fa-search-minus"></i>
+            </button>
+            <button (click)="rotateLeft()" title="Rotate Left">
+              <i class="fas fa-refresh" style="transform: scaleX(-1);"></i>
+            </button>
+            <button (click)="rotateRight()" title="Rotate Right">
+              <i class="fas fa-refresh"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+
+      <ng-container *ngIf="isPdf(doc.previewUrl)">
+        <p>PDF File Uploaded - <a (click)="openFullScreen(doc.previewUrl)">View</a></p>
+      </ng-container>
+    </div>
+    <button (click)="finalSubmit()" class="submit-button">Final Submit</button>
+  </div>
+
+</div>

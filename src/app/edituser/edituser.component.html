@@ -1,0 +1,70 @@
+<div class="container">
+    <h2>Edit User</h2>
+    <form [formGroup]="qualificationsForm" (ngSubmit)="onSubmit()">
+      
+      <label>First Name:</label>
+      <input type="text" formControlName="firstname" placeholder="Enter first name" />
+      <div *ngIf="qualificationsForm.get('firstname')?.invalid && qualificationsForm.get('firstname')?.touched">
+        <small>First name is required (min 3 characters).</small>
+      </div>
+  
+      <label>Last Name:</label>
+      <input type="text" formControlName="lastname" placeholder="Enter last name" />
+      <div *ngIf="qualificationsForm.get('lastname')?.invalid && qualificationsForm.get('lastname')?.touched">
+        <small>Last name is required (min 3 characters).</small>
+      </div>
+
+      <div class="gender-container">
+        <label>Gender:</label>
+        <div class="gender-options">
+          <input type="radio" formControlName="gender" value="Male"> Male
+          <input type="radio" formControlName="gender" value="Female"> Female
+        </div>
+      </div>    
+  
+      <label>Permanent Address:</label>
+      <textarea formControlName="permanentAddress" placeholder="Enter address"></textarea>
+  
+      <h3>Qualifications</h3>
+      <div formArrayName="qualifications">
+        <div *ngFor="let qualification of qualifications.controls; let i = index" [formGroupName]="i">
+          <h4>{{ qualificationLabels[i] }}</h4>
+          
+          <label>Institute Name:</label>
+          <input type="text" formControlName="instituteName" />
+  
+          <label>Percentage:</label>
+          <input type="text" formControlName="percentage" />
+  
+          <label>Passing Year:</label>
+          <input type="text" formControlName="passingYear" />
+  
+          <button type="button" (click)="qualifications.removeAt(i)">Remove</button>
+        </div>
+      </div>
+      <button type="button" (click)="qualifications.push(fb.group({ instituteName: '', percentage: '', passingYear: '' }))">
+        Add Qualification
+      </button>
+  
+      <h3>Uploaded Documents</h3>
+      <div class="documents-container" *ngIf="documentsArray.controls.length > 0" formArrayName="documents">
+        <div *ngFor="let document of documentsArray.controls; let i = index" [formGroupName]="i" class="document-item">
+          <p>
+            <label>{{ document.get('documentLabel')?.value }}</label>
+            <input type="file" (change)="onFileSelected($event, i)" accept=".jpg, .png, .pdf">
+          </p>
+
+          <p *ngIf="i > 0">
+            <button type="button" (click)="removeDocument(i)">Remove</button>
+          </p>
+        </div>
+      </div>  
+
+      <button type="button" (click)="addDocument()" [disabled]="documentsArray.length >= qualifications.length">
+          Add Document
+      </button>
+  
+      <button type="submit" [disabled]="qualificationsForm.invalid" class="update-buttton">Update User</button>
+    </form>
+  </div>
+  
